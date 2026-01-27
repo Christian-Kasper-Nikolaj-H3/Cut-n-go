@@ -3,6 +3,7 @@ import Express from 'express';
 const app = Express();
 
 app.use(Express.static('public'));
+app.use(Express.urlencoded({extended: true}));
 app.use(Express.json());
 app.set('view engine', 'ejs');
 
