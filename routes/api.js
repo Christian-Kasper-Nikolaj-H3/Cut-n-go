@@ -1,9 +1,33 @@
 import { Router } from 'express';
 import models from '../db/models.js';
+import { validateBookingData } from '../db/utils/validation.js';
 
 const router = Router();
 
-router.post('/booking/new', (req, res) => {
+router.post('/booking/new', async (req, res) => {
+    const { isValid, errors } = validateBookingData(req.body);
+
+    if (!isValid) {
+        return res.status(400).json({status: 'Validation error', errors: errors ?? 'Unknown error'});
+    }
+
+    const { SalonID, KundeFornavn, KundeEfternavn, KundeTelefon, KundeEmail, BestillingDato } = req.body;
+
+    try {
+        const created = await models.Bestillinger.create({
+            SalonID: Number(req.body.SalonID),
+            KundeFornavn: KundeFornavn.trim(),
+            KundeEfternavn: KundeEfternavn.trim(),
+            KundeTelefon: KundeTelefon.trim(),
+            KundeEmail: KundeEmail.trim(),
+            BestillingDato: new Date(BestillingDato.trim())
+        });
+
+        return res.status(201).json(created);
+    } catch (e) {
+        console.error(e.message);
+        res.status(500).json({status: 'Internal server error'});
+    }
     res.end();
 });
 
