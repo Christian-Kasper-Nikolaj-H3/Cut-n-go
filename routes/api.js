@@ -1,6 +1,6 @@
 import { Router } from 'express';
 import models from '../db/models.js';
-import { validateBookingData } from '../db/utils/validation.js';
+import { validateBookingData } from '../utils/validation.js';
 
 const router = Router();
 
@@ -15,7 +15,7 @@ router.post('/booking/new', async (req, res) => {
 
     try {
         const created = await models.Bestillinger.create({
-            SalonID: Number(req.body.SalonID),
+            SalonID: Number(SalonID),
             KundeFornavn: KundeFornavn.trim(),
             KundeEfternavn: KundeEfternavn.trim(),
             KundeTelefon: KundeTelefon.trim(),
