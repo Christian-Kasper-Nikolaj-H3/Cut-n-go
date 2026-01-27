@@ -3,8 +3,35 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Document</title>
+    <link rel="stylesheet" href="./inc/css/book.css">
 </head>
 <body>
-    <p>book</p>
+    <header>
+        <h1>Book</h1>
+    </header>
+    <main>
+        <article>
+            <section id="seleter">
+                <label for="location">Location</label>
+                <input type="text" id="location">
+                <label for="person">person</label>
+                <input type="text" id="person">
+            </section>
+            <section id="book">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Location</th>
+                            <th>Person</th>
+                        </tr>
+                    </thead>
+                    <tbody id="book-list">
+                    </tbody>
+                </table>
+            </section>
+        </article>
+    </main>
+    <script src="./inc/js/book.js"></script>
 </body>
 </html>
