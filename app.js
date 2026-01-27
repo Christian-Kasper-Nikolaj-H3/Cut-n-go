@@ -8,7 +8,7 @@ app.use(Express.json());
 app.set('view engine', 'ejs');
 
 app.use("/admin", (req, res) => {
-   res.render('admin');
+    res.render('admin');
 });
 
 app.use("/book", (req, res) => {
