@@ -2,7 +2,17 @@ import Express from 'express';
 
 const app = Express();
 
-app.get('/', (req, res) => {
+app.use(Express.static('public'));
+app.use(Express.json());
+app.set('view engine', 'ejs');
+
+app.use("/admin", (req, res) => {
+   res.render('admin');
+   res.end();
+});
+
+app.use("/book", (req, res) => {
+    res.render('book');
     res.end();
 });
 
