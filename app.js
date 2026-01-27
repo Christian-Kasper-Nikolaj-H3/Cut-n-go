@@ -19,4 +19,8 @@ app.use("/book", (req, res) => {
     res.render('book');
 });
 
+app.use('/booking', (req, res) => {
+    res.render('booking');
+});
+
 app.listen(3000, (err) => console.log('Server is running on port 3000'));
