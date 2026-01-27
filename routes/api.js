@@ -17,4 +17,8 @@ router.get('/booking/get/all', async (req, res) => {
     }
 });
 
+router.get('/booking/get/available', (req, res) => {
+
+});
+
 export default router;
