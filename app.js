@@ -1,5 +1,6 @@
 import Express from 'express';
 import apiRoute from './routes/api.js';
+import models from './db/models.js'
 
 const app = Express();
 

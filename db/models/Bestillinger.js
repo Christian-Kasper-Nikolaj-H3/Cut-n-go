@@ -35,7 +35,7 @@ let Bestillinger = sequelize.define('bestillinger', {
     },
 
     BestillingDato: {
-        type: DataTypes.DATEONLY,
+        type: DataTypes.DATE,
         allowNull: false
     }
 
