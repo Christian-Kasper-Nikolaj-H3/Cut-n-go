@@ -1,0 +1,27 @@
+{
+  "name": "cut-n-go",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon app.js -e html,js,css"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Christian-Kasper-Nikolaj-H3/Cut-n-go.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Christian-Kasper-Nikolaj-H3/Cut-n-go/issues"
+  },
+  "homepage": "https://github.com/Christian-Kasper-Nikolaj-H3/Cut-n-go#readme",
+  "dependencies": {
+    "express": "^5.2.1"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.11"
+  }
+}
