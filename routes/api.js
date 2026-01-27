@@ -4,6 +4,23 @@ import { validateBookingData } from '../utils/validation.js';
 
 const router = Router();
 
+/**
+ * POST /api/booking/new
+ *
+ * Expects JSON body:
+ * {
+ *   "SalonID": 1-12,
+ *   "KundeFornavn": "non-empty string",
+ *   "KundeEfternavn": "non-empty string",
+ *   "KundeTelefon": "min 8 digits (string)",
+ *   "KundeEmail": "valid email",
+ *   "BestillingDato": "YYYY-MM-DDTHH:mm (optional :ss) local datetime"
+ * }
+ *
+ * Responses:
+ * 201: created booking
+ * 400: { status: 'Validation error', errors: { field: message } }
+ */
 router.post('/booking/new', async (req, res) => {
     const { isValid, errors } = validateBookingData(req.body);
 
