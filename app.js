@@ -1,4 +1,5 @@
 import Express from 'express';
+import apiRoute from './routes/api.js';
 
 const app = Express();
 
@@ -6,6 +7,8 @@ app.use(Express.static('public'));
 app.use(Express.urlencoded({extended: true}));
 app.use(Express.json());
 app.set('view engine', 'ejs');
+
+app.use('/api', apiRoute);
 
 app.use("/admin", (req, res) => {
     res.render('admin');
