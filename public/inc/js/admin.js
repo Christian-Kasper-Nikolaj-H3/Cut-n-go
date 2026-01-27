@@ -59,24 +59,10 @@ let fetchAdminData = async () => {
             td.innerText = date.toLocaleString('da-DK', {dateStyle: 'short', timeStyle: 'short'});
             tr.appendChild(td);
 
-            // Slet knap
-            td = document.createElement('td');
-            const deleteBtn = document.createElement('button');
-            deleteBtn.innerText = 'Slet';
-            deleteBtn.className = 'delete-btn';
-            deleteBtn.onclick = () => deleteBooking(booking.id);
-            td.appendChild(deleteBtn);
-            tr.appendChild(td);
-
             document.getElementById('tableBody').appendChild(tr);
         }
 
     } catch (error) {
         console.log("Error fetching data:", error);
     }
-};
-
-let deleteBooking = async (id) => {
-    console.log(`Deleting booking with ID: ${id}`);
-    // await fetch(`/api/booking/delete/${id}`, { method: 'DELETE' });
 };
