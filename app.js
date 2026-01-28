@@ -23,4 +23,6 @@ app.use("/sign-in", (req, res) => {
     res.render('sign-in');
 });
 
+app.use("/register", (req, res) => res.render('register'));
+
 app.listen(3000, (err) => console.log('Server is running on port 3000'));
