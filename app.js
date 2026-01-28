@@ -19,4 +19,8 @@ app.use("/book", (req, res) => {
     res.render('book');
 });
 
+app.use("/sign-in", (req, res) => {
+    res.render('sign-in');
+});
+
 app.listen(3000, (err) => console.log('Server is running on port 3000'));
