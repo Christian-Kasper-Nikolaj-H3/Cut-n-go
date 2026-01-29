@@ -1,16 +1,21 @@
 import { DataTypes } from 'sequelize';
 import sequelize from '../database.js';
 
-let Bestillinger = sequelize.define('bestillinger', {
+let Users = sequelize.define('Users', {
 
-    id: {
+    Id: {
         type: DataTypes.INTEGER,
         autoIncrement: true,
         primaryKey: true
     },
 
-    SalonID: {
-        type: DataTypes.INTEGER,
+    Username: {
+        type: DataTypes.STRING,
+        allowNull: false
+    },
+
+    Password_hash: {
+        type: DataTypes.STRING,
         allowNull: false
     },
 
@@ -32,16 +37,11 @@ let Bestillinger = sequelize.define('bestillinger', {
     KundeEmail: {
         type: DataTypes.STRING,
         allowNull: false
-    },
-
-    BestillingDato: {
-        type: DataTypes.DATE,
-        allowNull: false
     }
 
 }, {
-    tableName: 'bestillinger',
+    tableName: 'User',
     timestamps: true
 });
 
-export default Bestillinger;
+export default Users;
