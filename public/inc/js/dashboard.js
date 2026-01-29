@@ -4,8 +4,8 @@ document.addEventListener( 'DOMContentLoaded', async function() {
 
 
 async function loadDashboardOrders() {
-    const upcomingBody = document.getElementById('upcomingBody');
-    const completedBody = document.getElementById('completedBody');
+    const upcomingBody = document.getElementById('upcomingOrdersBody');
+    const completedBody = document.getElementById('completedOrdersBody');
     const upcomingCount = document.getElementById('upcomingCount');
     const completedCount = document.getElementById('completedCount');
     const statusEl = document.getElementById('dashboardStatus');
@@ -14,7 +14,7 @@ async function loadDashboardOrders() {
         if (statusEl) statusEl.innerText = text;
     };
 
-    const clearBody = (body) => {
+    const clearBody = (tbody) => {
         while (tbody.firstChild) tbody.removeChild(tbody.firstChild);
     };
 
@@ -45,7 +45,7 @@ async function loadDashboardOrders() {
 
         // Customer
         td = document.createElement('td');
-        td.innerText = order.KundeFornavn + ' ' + order.KundeEfternavn;
+        td.innerText = `${order.KundeFornavn ?? ''} ${order.KundeEfternavn ?? ''}`.trim();
         tr.appendChild(td);
 
         // Phone
@@ -83,38 +83,43 @@ async function loadDashboardOrders() {
     try {
         setStatus('Loading orders...');
 
-        const res = await fetch('/api/bookings', {
+        const res = await fetch('/user/bookings', {
             method: 'GET',
-            headers: { 'Content-Type': 'application/json' },
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${localStorage.getItem('token')}`
+            },
             credentials: 'include'
         });
 
+        console.log('Response status:', res);
+
         if (!res.ok) {
             console.log(res.status);
-            showEmptyRow(upcomingBody, 'Error loading orders');
-            showEmptyRow(completedBody, 'Error loading orders');
+            showEmptyRow(upcomingBody, `Error loading upcoming orders (HTTP ${res.status}).`);
+            showEmptyRow(completedBody, `Error loading completed orders (HTTP ${res.status}).`);
             upcomingCount.innerText = '0';
             completedCount.innerText = '0';
-            setStatus('Error loading orders');
+            setStatus('Error loading orders.');
             return;
         }
 
-        const date = await res.json();
+        const data = await res.json();
 
         const upcoming = Array.isArray(data.upcoming) ? data.upcoming : [];
-        const completed = Array=isArray(data.completed) ? data.completed : [];
+        const completed = Array.isArray(data.completed) ? data.completed : [];
 
         // Upcoming
         if (upcoming.length === 0) {
-            showEmptyRow(upcomingBody, 'No upcoming orders');
+            showEmptyRow(upcomingBody, 'No upcoming orders.');
         } else {
             clearBody(upcomingBody);
             for (const order of upcoming) addOrderRow(upcomingBody, order);
         }
 
-        // Compoleted
+        // Completed
         if (completed.length === 0) {
-            showEmptyRow(completedBody, 'No completed orders');
+            showEmptyRow(completedBody, 'No completed orders.');
         } else {
             clearBody(completedBody);
             for (const order of completed) addOrderRow(completedBody, order);
@@ -123,7 +128,11 @@ async function loadDashboardOrders() {
         upcomingCount.innerText = String(upcoming.length);
         completedCount.innerText = String(completed.length);
 
-        setStatus(`Loaded ${upcoming.length} upcoming and ${completed.length} completed orders`);
+        if (upcoming.length === 0 && completed.length === 0) {
+            setStatus('No orders yet.');
+        } else {
+            setStatus(`Loaded ${upcoming.length} upcoming and ${completed.length} completed orders.`);
+        }
     } catch (error) {
         console.log('Error loading orders:', error);
         showEmptyRow(upcomingBody, 'Error loading upcoming orders.');
