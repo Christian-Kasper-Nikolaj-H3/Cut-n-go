@@ -1,6 +1,6 @@
 ```mermaid
 erDiagram
-    Bestillinger {
+    Orders {
         int id PK
         int SalonID
         

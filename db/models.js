@@ -1,9 +1,9 @@
 import sequelize from './database.js';
-import Bestillinger from "./models/Bestillinger.js";
-import user from "./models/user.js";
+import Orders from "./models/Orders.js";
+import Users from "./models/Users.js";
 
 export default {
     sequelize,
-    Bestillinger,
-    user
+    Orders,
+    Users
 };
