@@ -1,6 +1,6 @@
 import Express from 'express';
 import apiRoute from './routes/api.js';
-import models from './db/models.js'
+import authRoute from './routes/auth.js';
 
 const app = Express();
 
@@ -10,6 +10,7 @@ app.use(Express.json());
 app.set('view engine', 'ejs');
 
 app.use('/api', apiRoute);
+app.use('/auth', authRoute);
 
 app.use("/admin", (req, res) => {
     res.render('admin');
