@@ -12,16 +12,16 @@ router.post('/login', async (req, res) => {
         if (!username || !password){
             return res.status(400).json({status: 'Bad request'});
         }
-        let checkUser = await models.Users.findOne({ where: {username:username} });
+        let checkUser = await models.Users.findOne({ where: {Username:username} });
         if (!checkUser){
             return res.status(401).json({status: 'Unauthorized'});
         }
-        let checkPassword = await bcryptjs.compare(password, checkUser.password);
+        let checkPassword = await bcryptjs.compare(password, checkUser.Password_hash);
         if (!checkPassword){
             return res.status(401).json({status: 'Unauthorized'});
         }
         const token = jwt.sign(
-            { id: checkUser.id, username: checkUser.username },
+            { id: checkUser.Id, username: checkUser.Username },
             process.env.JWT_SECRET,
             { expiresIn: '7d' }
         );
