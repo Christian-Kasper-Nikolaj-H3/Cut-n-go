@@ -12,7 +12,7 @@ router.post('/login', async (req, res) => {
         if (!username || !password){
             return res.status(400).json({status: 'Bad request'});
         }
-        let checkUser = await models.user.findOne({where:{username:username}});
+        let checkUser = await models.Users.findOne({ where: {username:username} });
         if (!checkUser){
             return res.status(401).json({status: 'Unauthorized'});
         }
@@ -42,13 +42,13 @@ router.post('/register', async (req, res) => {
             return res.status(400).json({status: 'Bad request'});
         }
 
-        const doesUserExist = await models.user.findOne({  where: { username }});
+        const doesUserExist = await models.Users.findOne({ where: { username }});
         if(doesUserExist){
             return res.status(409).json({status: 'Conflict'});
         }
 
         const hashedPassword = await bcryptjs.hash(password, 12);
-        const newUser = await models.user.create({username, password: hashedPassword});
+        const newUser = await models.Users.create({username, password: hashedPassword});
 
         const token = jwt.sign(
             { id: newUser.id, username: newUser.username },
