@@ -3,12 +3,14 @@ import apiRoute from './routes/api.js';
 import authRoute from './routes/auth.js';
 import userRoute from './routes/user.js';
 import {requireAuth} from "./middleware/auth.js";
+import cookieParser from 'cookie-parser';
 
 const app = Express();
 
 app.use(Express.static('public'));
 app.use(Express.urlencoded({extended: true}));
 app.use(Express.json());
+app.use(cookieParser());
 app.set('view engine', 'ejs');
 
 app.use('/api', apiRoute);
