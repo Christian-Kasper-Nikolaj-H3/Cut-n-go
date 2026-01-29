@@ -32,8 +32,12 @@ router.post('/booking/new', async (req, res) => {
     const { SalonID, KundeFornavn, KundeEfternavn, KundeTelefon, KundeEmail, BestillingDato } = req.body;
 
     try {
+
+        const doesUserExist = await models.Users.findOne({ where: { KundeEmail } });
+
         const created = await models.Orders.create({
             SalonID: Number(SalonID),
+            UserID: doesUserExist?.Id ?? null,
             KundeFornavn: KundeFornavn.trim(),
             KundeEfternavn: KundeEfternavn.trim(),
             KundeTelefon: KundeTelefon.trim(),
@@ -78,7 +82,7 @@ router.get('/booking/available-times', async (req, res) => {
 
     try {
         // Hent alle bookinger for den valgte salon og dato
-        const bookings = await models.Bestillinger.findAll({
+        const bookings = await models.Orders.findAll({
             where: {
                 SalonID: Number(salonID),
             }
