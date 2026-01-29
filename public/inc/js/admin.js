@@ -22,7 +22,7 @@ let fetchAdminData = async () => {
 
             // Booking ID
             let td = document.createElement('td');
-            td.innerText = booking.id;
+            td.innerText = booking.Id;
             tr.appendChild(td);
 
             // Fornavn
