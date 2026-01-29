@@ -1,6 +1,7 @@
 import { Router } from 'express';
 import models from '../db/models.js';
 import { validateBookingData } from '../utils/validation.js';
+import { requireAuth } from '../middleware/auth.js';
 
 const router = Router();
 
@@ -48,7 +49,8 @@ router.post('/booking/new', async (req, res) => {
     res.end();
 });
 
-router.get('/booking/get/all', async (req, res) => {
+router.get('/booking/get/all', requireAuth, async (req, res) => {
+    console.log(req);
     try {
         const data = await models.Bestillinger.findAll({});
         return res.status(200).json(data);
