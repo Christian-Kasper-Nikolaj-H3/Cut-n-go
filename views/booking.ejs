@@ -1,0 +1,59 @@
+<html lang="da">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Book tid</title>
+    <link rel="stylesheet" href="./inc/css/booking.css">
+</head>
+<body>
+    <main>
+        <form id="bookingForm">
+            <div class="form-group">
+                <label for="fornavn">Fornavn *</label>
+                <input type="text" id="fornavn" name="KundeFornavn" required>
+            </div>
+
+            <div class="form-group">
+                <label for="efternavn">Efternavn *</label>
+                <input type="text" id="efternavn" name="KundeEfternavn" required>
+            </div>
+
+            <div class="form-group">
+                <label for="telefon">Telefon *</label>
+                <input type="tel" id="telefon" name="KundeTelefon" placeholder="12345678" required>
+            </div>
+
+            <div class="form-group">
+                <label for="email">Email *</label>
+                <input type="email" id="email" name="KundeEmail" placeholder="navn@email.dk" required>
+            </div>
+
+            <div class="form-group full-width">
+                <label for="salon">Vælg salon *</label>
+                <select id="salon" name="SalonID" required>
+                    <option value="">Vælg salon...</option>
+                    <option value="1">Salon 1</option>
+                    <option value="2">Salon 2</option>
+                </select>
+            </div>
+
+            <div class="form-group full-width">
+                <label for="dato">Dato *</label>
+                <input type="date" id="dato" name="BestillingDato" required>
+            </div>
+
+            <div class="form-group full-width">
+                <label for="tid">Tidspunkt *</label>
+                <select id="tid" name="BestillingTid" required disabled>
+                    <option value="">Vælg først salon og dato...</option>
+                </select>
+            </div>
+
+            <button type="submit" class="submit-btn">Book tid</button>
+            
+            <div id="message" class="message"></div>
+        </form>
+    </main>
+    <script src="./inc/js/booking.js"></script>
+</body>
+</html>

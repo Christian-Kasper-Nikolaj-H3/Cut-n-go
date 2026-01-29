@@ -60,4 +60,57 @@ router.get('/booking/get/all', requireAuth, async (req, res) => {
     }
 });
 
+/**
+ * GET /api/booking/available-times
+ * 
+ * Query params:
+ * - salonID: required
+ * - date: required (YYYY-MM-DD)
+ * 
+ * Returns available time slots for the given salon and date
+ */
+router.get('/booking/available-times', async (req, res) => {
+    const { salonID, date } = req.query;
+
+    if (!salonID || !date) {
+        return res.status(400).json({ status: 'Missing salonID or date parameter' });
+    }
+
+    try {
+        // Hent alle bookinger for den valgte salon og dato
+        const bookings = await models.Bestillinger.findAll({
+            where: {
+                SalonID: Number(salonID),
+            }
+        });
+
+        // Filtrer bookinger for den specifikke dag
+        const bookedTimes = bookings
+            .filter(booking => {
+                const bookingDate = new Date(booking.BestillingDato);
+                const requestDate = new Date(date);
+                return bookingDate.toDateString() === requestDate.toDateString();
+            })
+            .map(booking => {
+                const d = new Date(booking.BestillingDato);
+                return `${String(d.getHours()).padStart(2, '0')}:${String(d.getMinutes()).padStart(2, '0')}`;
+            });
+
+        // Generer alle mulige tider (09:00 - 17:00, hver 30 min)
+        const allTimes = [];
+        for (let hour = 9; hour < 17; hour++) {
+            allTimes.push(`${String(hour).padStart(2, '0')}:00`);
+            allTimes.push(`${String(hour).padStart(2, '0')}:30`);
+        }
+
+        // Filtrer ledige tider
+        const availableTimes = allTimes.filter(time => !bookedTimes.includes(time));
+
+        return res.status(200).json({ availableTimes });
+    } catch (e) {
+        console.error(e.message);
+        res.status(500).json({ status: 'Internal server error' });
+    }
+});
+
 export default router;
