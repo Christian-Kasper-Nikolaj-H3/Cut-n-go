@@ -19,9 +19,12 @@
   },
   "homepage": "https://github.com/Christian-Kasper-Nikolaj-H3/Cut-n-go#readme",
   "dependencies": {
+    "bcryptjs": "^3.0.3",
+    "cookie-parser": "^1.4.7",
     "dotenv": "^17.2.3",
     "ejs": "^4.0.1",
     "express": "^5.2.1",
+    "jsonwebtoken": "^9.0.3",
     "mariadb": "^3.4.5",
     "mysql2": "^3.16.2",
     "sequelize": "^6.37.7"
