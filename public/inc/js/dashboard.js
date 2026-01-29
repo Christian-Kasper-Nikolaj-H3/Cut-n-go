@@ -92,7 +92,6 @@ async function loadDashboardOrders() {
             credentials: 'include'
         });
 
-        console.log('Response status:', res);
 
         if (!res.ok) {
             console.log(res.status);
@@ -105,6 +104,7 @@ async function loadDashboardOrders() {
         }
 
         const data = await res.json();
+        console.log(data);
 
         const upcoming = Array.isArray(data.upcoming) ? data.upcoming : [];
         const completed = Array.isArray(data.completed) ? data.completed : [];
