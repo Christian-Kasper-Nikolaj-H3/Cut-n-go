@@ -29,6 +29,11 @@ app.use("/sign-in", (req, res) => {
     res.render('sign-in');
 });
 
+app.get("/logout", (req, res) => {
+    res.clearCookie("token", { sameSite: "lax", secure: process.env.NODE_ENV === "production" });
+    res.redirect("/sign-in");
+});
+
 app.use("/dashboard", requireAuth, (req, res) => res.render('dashboard'));
 app.use("/register", (req, res) => res.render('register'));
 
