@@ -15,10 +15,6 @@ app.use("/admin", (req, res) => {
     res.render('admin');
 });
 
-app.use("/book", (req, res) => {
-    res.render('book');
-});
-
 app.use('/booking', (req, res) => {
     res.render('booking');
 });
