@@ -36,19 +36,19 @@ router.post('/login', async (req, res) => {
 
 router.post('/register', async (req, res) => {
     try {
-        const { username, password } = req.body;
+        const { username,name,surname, password,phone,email } = req.body;
 
-        if(!username || !password){
+        if(!username || !password || !name || !surname || !phone || !email){
             return res.status(400).json({status: 'Bad request'});
         }
 
-        const doesUserExist = await models.Users.findOne({ where: { username }});
+        const doesUserExist = await models.Users.findOne({ where: { Username:username }});
         if(doesUserExist){
             return res.status(409).json({status: 'Conflict'});
         }
 
         const hashedPassword = await bcryptjs.hash(password, 12);
-        const newUser = await models.Users.create({username, password: hashedPassword});
+        const newUser = await models.Users.create({Username:username, Password_hash: hashedPassword, KundeFornavn:name, KundeEfternavn:surname, KundeTelefon:phone, KundeEmail:email});
 
         const token = jwt.sign(
             { id: newUser.id, username: newUser.username },
