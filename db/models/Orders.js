@@ -3,10 +3,15 @@ import sequelize from '../database.js';
 
 let Orders = sequelize.define('Orders', {
 
-    id: {
+    Id: {
         type: DataTypes.INTEGER,
         autoIncrement: true,
         primaryKey: true
+    },
+
+    UserID: {
+        type: DataTypes.INTEGER,
+        allowNull: true
     },
 
     SalonID: {
