@@ -12,7 +12,7 @@ router.get('/bookings', requireAuth, async (req, res) => {
     );
 
     const bookings = await models.Orders.findAll({ where: { UserID: id } });
-    return res.status(200).json({ upcoming: bookings });
+    return res.status(200).json({ bookings: bookings });
 
 
 });

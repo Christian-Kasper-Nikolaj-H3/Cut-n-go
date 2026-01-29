@@ -106,8 +106,16 @@ async function loadDashboardOrders() {
         const data = await res.json();
         console.log(data);
 
-        const upcoming = Array.isArray(data.upcoming) ? data.upcoming : [];
+        const upcoming = Array.isArray(data.bookings) ? data.bookings : [];
         const completed = Array.isArray(data.completed) ? data.completed : [];
+
+        const upcomingFiltered = upcoming.filter(appointment =>
+            new Date(appointment.BestillingDato) > new Date()
+        );
+
+        const completedFiltered = completed.filter(appointment =>
+            new Date(appointment.BestillingDato) <= new Date()
+        );
 
         // Upcoming
         if (upcoming.length === 0) {
