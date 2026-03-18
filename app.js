@@ -2,6 +2,7 @@ import Express from 'express';
 import apiRoute from './routes/api.js';
 import authRoute from './routes/auth.js';
 import userRoute from './routes/user.js';
+import adminRoute from './routes/admin.js';
 import {requireAuth} from "./middleware/auth.js";
 import cookieParser from 'cookie-parser';
 
@@ -16,6 +17,7 @@ app.set('view engine', 'ejs');
 app.use('/api', apiRoute);
 app.use('/auth', authRoute);
 app.use('/user', userRoute);
+app.use('/admin', adminRoute);
 
 app.use("/admin", (req, res) => {
     res.render('admin');

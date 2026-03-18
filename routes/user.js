@@ -17,6 +17,10 @@ router.get('/bookings', requireAuth, async (req, res) => {
 
 });
 
+function capitalizeFirstLetter(string) {
+    return string.charAt(0).toUpperCase() + string.slice(1);
+}
+
 router.get('/me', requireAuth, async (req, res) => {
     try {
         const user = await models.Users.findByPk(req.user.id, {
@@ -37,8 +41,8 @@ router.get('/me', requireAuth, async (req, res) => {
         return res.status(200).json({
             id: user.Id,
             username: user.Username,
-            name: user.KundeFornavn,
-            surname: user.KundeEfternavn,
+            name: capitalizeFirstLetter(user.KundeFornavn),
+            surname: capitalizeFirstLetter(user.KundeEfternavn),
             phone: user.KundeTelefon,
             email: user.KundeEmail,
         });
