@@ -17,4 +17,35 @@ router.get('/bookings', requireAuth, async (req, res) => {
 
 });
 
+router.get('/me', requireAuth, async (req, res) => {
+    try {
+        const user = await models.Users.findByPk(req.user.id, {
+            attributes: [
+                'Id',
+                'Username',
+                'KundeFornavn',
+                'KundeEfternavn',
+                'KundeTelefon',
+                'KundeEmail',
+            ],
+        });
+
+        if (!user) {
+            return res.status(404).json({ status: 'User not found' });
+        }
+
+        return res.status(200).json({
+            id: user.Id,
+            username: user.Username,
+            name: user.KundeFornavn,
+            surname: user.KundeEfternavn,
+            phone: user.KundeTelefon,
+            email: user.KundeEmail,
+        });
+    } catch (e) {
+        console.error(e.message);
+        return res.status(500).json({ status: 'Internal server error' });
+    }
+});
+
 export default router;
