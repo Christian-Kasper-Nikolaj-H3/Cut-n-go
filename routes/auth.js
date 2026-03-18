@@ -26,13 +26,6 @@ router.post('/login', async (req, res) => {
             {expiresIn: '7d'}
         );
 
-        res.cookie('token', token, {
-            httpOnly: true,
-            sameSite: 'lax',
-            secure: process.env.NODE_ENV === 'production',
-            maxAge: 7 * 24 * 60 * 60 * 1000
-        });
-
         return res.status(200).json({success: true, token: token});
 
     } catch (e) {
@@ -69,13 +62,6 @@ router.post('/register', async (req, res) => {
             process.env.JWT_SECRET,
             {expiresIn: '7d'}
         );
-
-        res.cookie('token', token, {
-            httpOnly: true,
-            sameSite: 'lax',
-            secure: process.env.NODE_ENV === 'production',
-            maxAge: 7 * 24 * 60 * 60 * 1000
-        });
 
         return res.status(201).json({status: 'Created', token: token});
     } catch (e) {

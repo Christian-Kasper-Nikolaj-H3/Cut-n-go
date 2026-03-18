@@ -37,4 +37,4 @@ app.get("/logout", (req, res) => {
 app.use("/dashboard", requireAuth, (req, res) => res.render('dashboard'));
 app.use("/register", (req, res) => res.render('register'));
 
-app.listen(3000, (err) => console.log('Server is running on port 3000'));
+app.listen(3000, '0.0.0.0', (err) => console.log('Server is running on port 3000'));
