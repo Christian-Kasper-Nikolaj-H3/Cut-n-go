@@ -26,6 +26,7 @@ router.get('/me', requireAuth, async (req, res) => {
         const user = await models.Users.findByPk(req.user.id, {
             attributes: [
                 'Id',
+                'role_id',
                 'Username',
                 'KundeFornavn',
                 'KundeEfternavn',
@@ -38,6 +39,11 @@ router.get('/me', requireAuth, async (req, res) => {
             return res.status(404).json({ status: 'User not found' });
         }
 
+        console.log(user);
+        const adminRole = await models.UserRoles.findOne({
+            where: { name: 'admin' }
+        });
+
         return res.status(200).json({
             id: user.Id,
             username: user.Username,
@@ -45,6 +51,7 @@ router.get('/me', requireAuth, async (req, res) => {
             surname: capitalizeFirstLetter(user.KundeEfternavn),
             phone: user.KundeTelefon,
             email: user.KundeEmail,
+            isAdmin: user.role_id === adminRole.id
         });
     } catch (e) {
         console.error(e.message);

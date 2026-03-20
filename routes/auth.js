@@ -47,10 +47,19 @@ router.post('/register', async (req, res) => {
             return res.status(409).json({status: 'Conflict'});
         }
 
+        const userRole = await models.UserRoles.findOne({
+            where: {name: 'user'}
+        });
+        if(!userRole) {
+            console.error('User role not found');
+            return res.status(500).json({status: 'Internal server error'});
+        }
+
         const hashedPassword = await bcryptjs.hash(password, 12);
         const newUser = await models.Users.create({
             Username: username,
             Password_hash: hashedPassword,
+            role_id: userRole.dataValues.id,
             KundeFornavn: name,
             KundeEfternavn: surname,
             KundeTelefon: phone,

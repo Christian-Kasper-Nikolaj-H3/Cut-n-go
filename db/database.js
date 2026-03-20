@@ -1,5 +1,6 @@
 import { Sequelize } from 'sequelize';
 import dotenv from 'dotenv';
+import models from './models.js';
 
 dotenv.config();
 
@@ -24,6 +25,24 @@ let sequelize = new Sequelize(process.env.DB_NAME, process.env.DB_USER, process.
         console.log('[SYN]\t\tmodels has been synchronized.\n')
     } catch (e) {
         console.error('[SYN]\t\tUnable to synchronize models:', e);
+    }
+
+    try {
+        const userRoles = await models.UserRoles.findAll();
+        if(!userRoles.length) {
+            await models.UserRoles.bulkCreate([
+                {name: 'user'},
+                {name: 'admin'}
+            ]);
+
+            await models.EmployeeRoles.bulkCreate([
+                {name: 'employee'},
+                {name: 'manager'},
+            ])
+        }
+        console.log('[SYN]\t\tUserRoles has been created.\n')
+    } catch (e) {
+        console.error('[SYN]\t\tUnable to create UserRoles:', e);
     }
 })();
 
